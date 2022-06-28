@@ -105,15 +105,20 @@ function doubleClicked() {
 function draw() {
 
   background(255);
-  image(drawing, cWidth/2, cHeight/2)
+  image(drawing, cWidth / 2, cHeight / 2)
   checkSettings();
   if (keyboardCheck.checked()) {
     limCursor();
     space();
     keyCheck();
-    mouseMoved(x,y);
+    mouseMoved(x, y);
   }
-  mouseMoved(mouseX,mouseY)
+  if (mouseCheck.checked()) {
+    noCursor()
+    mouseMoved(mouseX, mouseY)
+  } else {
+    cursor()
+  }
 
 
 
@@ -300,13 +305,13 @@ function reset() {
 
 
 
-function mouseMoved(x,y) {
+function mouseMoved(x, y) {
   kpointer = createGraphics(cWidth, cHeight);
   strokeWeight(1);
   kpointer.fill(colorPicker.color())
-  kpointer.rect(x - 10 - slider.value(), y - 1-slider.value()/4, 20 + slider.value() * 2, 2+slider.value()/2);
-  kpointer.rect(x - 1-slider.value()/4, y - 10 - slider.value(), 2+slider.value()/2, 20+ slider.value() * 2);
-  image(kpointer, cWidth/2, cHeight/2);
+  kpointer.rect(x - 10 - slider.value(), y - 1 - slider.value() / 4, 20 + slider.value() * 2, 2 + slider.value() / 2);
+  kpointer.rect(x - 1 - slider.value() / 4, y - 10 - slider.value(), 2 + slider.value() / 2, 20 + slider.value() * 2);
+  image(kpointer, cWidth / 2, cHeight / 2);
 }
 
 function limCursor() {
