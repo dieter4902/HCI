@@ -1,0 +1,111 @@
+*,
+*::after,
+*::before {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  color: #ffffff
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+}
+
+canvas {
+  display: block;
+}
+
+#sliderDiv {
+  display: flex;
+  flex-flow: column;
+  align-items: center;
+}
+
+#slider {
+  width: 75%;
+}
+
+#toolbar {
+  display: flex;
+  flex-flow: column;
+  position: fixed;
+  height: calc(100vh - 56px);
+  width: 150px;
+  top: 56px;
+  justify-content: space-evenly;
+  align-items: center;
+  background-color: #212529;
+  overflow: hidden;
+}
+
+#main {
+  margin-top: 64px;
+  margin-left: 150px;
+  width: calc(100vw - 350px);
+  height: calc(100vh - 64px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: auto;
+}
+
+:root {
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 1rem;
+  text-align: center;
+  line-height: 1.2;
+}
+
+#eraser {
+  width: 75%;
+  height: 5%;
+  font-size: 1rem;
+}
+
+#radioDiv>div {
+  display: flex;
+  flex-flow: column;
+  align-items: center;
+}
+
+#radioDiv>div>input {
+  margin-left: 0;
+  margin-right: 0;
+  margin-top: 0.25rem;
+}
+
+fieldset {
+  display: flex;
+  flex-flow: column;
+  align-items: flex-start;
+  border: unset;
+}
+
+fieldset>div {
+  margin-left: 2rem;
+}
+
+#defaultCanvas0 {
+  border: 2px solid #dadada;
+  border-width: 3px;
+}
+
+#defaultCanvas0.focused {
+  outline: none;
+  border-color: #9ecaed;
+  box-shadow: 0 0 10px #9ecaed;
+}
+
+.sidebar {
+  display: flex;
+  flex-flow: column;
+  position: fixed;
+  height: calc(100vh - 56px);
+  width: 200px;
+  top: 56px;
+  left: calc(100vw - 200px);
+  align-items: center;
+  background-color: #212529;
+  overflow: hidden;
+}
