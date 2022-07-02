@@ -24,8 +24,7 @@ function setup() {
   px = x = cWidth / 2;
   py = y = cHeight / 2;
   speed = 4;
-  noCursor()
-
+  cursor(CROSS)
   pixelDensity(1);
   imageMode(CENTER)
   createCanvas(cWidth, cHeight).parent('main');
@@ -94,6 +93,8 @@ function setup() {
   voice.onLoad = () => {
     voice.setLang("de-DE");
   };
+
+  
 }
 
 function doubleClicked() {
@@ -105,7 +106,7 @@ function doubleClicked() {
 }
 
 function draw() {
-
+  
   background(255);
   image(drawing, cWidth / 2, cHeight / 2)
   checkSettings();
@@ -113,13 +114,7 @@ function draw() {
     limCursor();
     space();
     keyCheck();
-    mouseMoved(x, y);
-  }
-  if (mouseCheck.checked()) {
-    noCursor()
-    mouseMoved(mouseX, mouseY)
-  } else {
-    cursor()
+    //cursorMoved(x, y);
   }
 
   if (keyIsDown(17) && keyIsDown(90)) {
@@ -134,19 +129,6 @@ function draw() {
     }
   }
 
-  if (keyboard) {
-    if (keyIsDown(LEFT_ARROW)) {
-      posChange("width", -1);
-    } else if (keyIsDown(RIGHT_ARROW)) {
-      posChange("width", 1);
-    } else if (keyIsDown(DOWN_ARROW)) {
-      posChange("height", 1);
-    } else if (keyIsDown(UP_ARROW)) {
-      posChange("height", -1);
-    } else {
-      select("#defaultCanvas0").removeClass("focused")
-    }
-  }
   if (speech) {
     if (left) {
       posChange("width", -1);
@@ -331,13 +313,14 @@ function saveStep(array) {
 
 
 
-function mouseMoved(x, y) {
-  kpointer = createGraphics(cWidth, cHeight);
-  strokeWeight(1);
+function cursorMoved(x, y) {
+  //fuck this code
+  /*kpointer = createGraphics(cWidth, cHeight);
   kpointer.fill(colorPicker.color())
-  kpointer.rect(x - 10 - slider.value(), y - 1 - slider.value() / 4, 20 + slider.value() * 2, 2 + slider.value() / 2);
-  kpointer.rect(x - 1 - slider.value() / 4, y - 10 - slider.value(), 2 + slider.value() / 2, 20 + slider.value() * 2);
+  kpointer.rect(x - 10 , y - 1  , 20  , 2  );
+  kpointer.rect(x - 1  , y - 10 , 2  , 20  );
   image(kpointer, cWidth / 2, cHeight / 2);
+  delete kpointer*/
 }
 
 function limCursor() {
