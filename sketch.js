@@ -10,7 +10,8 @@ let touch = false,
   keyboard = false,
   speech = false,
   mouse = true;
-
+let stepsBack = [];
+let stepsForward = [];
 //input-vars
 let speechRec, stopSpeech, up, left, down, right;
 let prevTouch = []
@@ -25,6 +26,7 @@ function setup() {
   speed = 4;
   noCursor()
 
+  pixelDensity(1);
   imageMode(CENTER)
   createCanvas(cWidth, cHeight).parent('main');
 
@@ -120,7 +122,17 @@ function draw() {
     cursor()
   }
 
-
+  if (keyIsDown(17) && keyIsDown(90)) {
+    if (stepsBack.length >= 1) {
+      saveStep(stepsForward)
+      drawing.image(stepsBack.pop(), 0, 0)
+    }
+  } else if (keyIsDown(17) && keyIsDown(89)) {
+    if (stepsForward.length >= 1) {
+      saveStep(stepsBack)
+      drawing.image(stepsForward.pop(), 0, 0)
+    }
+  }
 
   if (keyboard) {
     if (keyIsDown(LEFT_ARROW)) {
@@ -155,17 +167,19 @@ function draw() {
 function posChange(dim, value) {
   if (dim === "height") {
     if (checkClientSize(dim, positionY + value)) {
-      line(positionX, positionY, positionX, positionY + value);
+      drawLine(positionX, positionY, positionX, positionY + value);
       positionY += value;
     }
   } else {
     if (checkClientSize(dim, positionX + value)) {
-      line(positionX, positionY, positionX + value, positionY);
+      drawLine(positionX, positionY, positionX + value, positionY);
       positionX += value;
     }
   }
   select("#defaultCanvas0").addClass("focused")
 }
+
+
 
 
 function speechMovement() {
@@ -226,7 +240,7 @@ function mouseDragged() {
     checkSettings();
     positionX = pmouseX;
     positionY = pmouseY;
-    drawing.line(mouseX, mouseY, pmouseX, pmouseY);
+    drawLine(mouseX, mouseY, pmouseX, pmouseY);
     drawing.stroke(colorPicker.color());
     drawing.strokeWeight(slider.value());
     dragged = true;
@@ -246,7 +260,7 @@ function touchMoved() {
     checkSettings();
     for (let i = 0; i < touches.length; i++) {
       if (prevTouch[i]) {
-        drawing.line(prevTouch[i].x, prevTouch[i].y, touches[i].x, touches[i].y);
+        drawLine(prevTouch[i].x, prevTouch[i].y, touches[i].x, touches[i].y);
       }
       prevTouch[i] = { x: touches[i].x, y: touches[i].y }
     }
@@ -300,6 +314,18 @@ function reset() {
 
 
 
+function drawLine(position1X, position1Y, position2X, position2Y,) {
+  saveStep(stepsBack)
+  stepsForward = []
+  drawing.line(position1X, position1Y, position2X, position2Y);
+}
+
+function saveStep(array) {
+  current = createGraphics(cWidth, cHeight);
+  current.background(255);
+  current.image(drawing, 0, 0);
+  array.push(current);
+}
 
 
 
@@ -332,6 +358,6 @@ function space() {
   if (keyIsDown(67)) {
     drawing.stroke(colorPicker.color());
     drawing.strokeWeight(slider.value());
-    drawing.line(x, y, px, py);
+    drawLine(x, y, px, py);
   }
 }
