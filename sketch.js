@@ -69,8 +69,8 @@ function setup() {
       if (file.type === 'image') {
         let urlOfImageFile = URL.createObjectURL(file.file);
         let imageObject = loadImage(urlOfImageFile, () => {
-          cHeight = imageObject.height
-          cWidth = imageObject.width
+          cHeight = Math.min(imageObject.height, cHeight)
+          cWidth = Math.min(imageObject.width, cWidth)
           resizeCanvas(cWidth, cHeight);
           saveDrawing()
           drawing.image(imageObject, 0, 0, cWidth, cHeight)
@@ -326,10 +326,11 @@ function drawLine(position1X, position1Y, position2X, position2Y) {
   drawing.line(position1X, position1Y, position2X, position2Y);
 }
 
-function saveDrawing(){
+function saveDrawing() {
   saveStep(stepsBack)
-    stepsForward = []
+  stepsForward = []
 }
+
 
 function saveStep(array) {
   current = createGraphics(cWidth, cHeight);
