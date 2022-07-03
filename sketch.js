@@ -84,9 +84,15 @@ function setup() {
 
   //Undo und Redo
   undo = select('#undo');
-  undo.mouseClicked(() => {undoStep()});
+  undo.mouseClicked(() => {
+    undoStep()
+    undoStep()
+  });
   redo = select('#redo');
-  redo.mouseClicked(() => { redoStep()});
+  redo.mouseClicked(() => {
+    redoStep()
+    redoStep()
+  });
 
   //checkBoxes for InputTypes
   mouseCheck = createCheckbox('Mouse', true).parent('mouse');
@@ -147,13 +153,9 @@ function draw() {
   }
   if (undoOption) {
     if (keyIsDown(17) && keyIsDown(90)) {
-      if (stepsBack.length >= 1) {
-        undoStep()
-      }
+      undoStep()
     } else if (keyIsDown(17) && keyIsDown(89)) {
-      if (stepsForward.length >= 1) {
-        redoStep()
-      }
+      redoStep()
     }
   }
 
@@ -333,12 +335,16 @@ function saveDrawing() {
 }
 
 function undoStep() {
-  saveStep(stepsForward)
-  drawing.image(stepsBack.pop(), 0, 0)
+  if (stepsBack.length >= 1) {
+    saveStep(stepsForward)
+    drawing.image(stepsBack.pop(), 0, 0)
+  }
 }
 function redoStep() {
-  saveStep(stepsBack)
-  drawing.image(stepsForward.pop(), 0, 0)
+  if (stepsForward.length >= 1) {
+    saveStep(stepsBack)
+    drawing.image(stepsForward.pop(), 0, 0)
+  }
 }
 
 function saveStep(array) {
@@ -357,14 +363,10 @@ function mousePressed() {
 
 function keyPressed() {
   if (!undoOption) {
-    if ((key == "Control" && keyIsDown(90)) || (key == "z" && keyIsDown(17))) {
-      if (stepsBack.length >= 1) {
-        undoStep()
-      }
-    } else if ((key == "Control" && keyIsDown(89)) || (key == "y" && keyIsDown(17))) {
-      if (stepsForward.length >= 1) {
-        redoStep()
-      }
+    if ((key === "Control" && keyIsDown(90)) || (key === "z" && keyIsDown(17))) {
+      undoStep()
+    } else if ((key === "Control" && keyIsDown(89)) || (key === "y" && keyIsDown(17))) {
+      redoStep()
     }
   }
 }
