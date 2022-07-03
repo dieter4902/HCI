@@ -96,8 +96,11 @@ function setup() {
   select('#voice').mouseClicked(() => {
     textToSpeech = !textToSpeech;
   });
-  //
-
+  //toggle to different undo redo mode
+  select('#urtype').mouseClicked(() => {
+    saveStepOption = !saveStepOption;
+    undoOption = !undoOption;
+  });
 
   //checkBoxes for InputTypes
   mouseCheck = createCheckbox('Mouse', true).parent('mouse');
