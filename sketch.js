@@ -16,7 +16,7 @@ let voice;
 let saveStepOption = false
 let undoOption = false
 let load;
-let textToSpeech = false;
+let sounds = false;
 
 let drawing_enabled = true;
 
@@ -115,7 +115,9 @@ function setup() {
   //Undo und Redo
   undo = select('#undo');
   undo.mouseClicked(() => {
-    undosound.play()
+    if(sounds) {
+      undosound.play()
+    }
     stepsBack.pop()
     undoStep()
   });
@@ -123,12 +125,14 @@ function setup() {
   redo.mouseClicked(() => {
     stepsBack.pop()
     redoStep()
-    redosound.play()
+    if(sounds) {
+      redosound.play()
+    }
   });
 
   //toggle voice
   select('#voice').mouseClicked(() => {
-    textToSpeech = !textToSpeech;
+    sounds = !sounds;
   });
   //toggle to different undo redo mode
   select('#urtype').mouseClicked(() => {
@@ -185,7 +189,7 @@ function doubleClicked() {
   if (mouseX > 0 && mouseY > 0) {
     x = mouseX;
     y = mouseY;
-    if (textToSpeech) {
+    if (sounds) {
       voice.speak("Position gesetzt");
     }
   }
@@ -247,7 +251,7 @@ function speechMovement() {
       down = false
       right = false
       left = false
-      if (textToSpeech) {
+      if (sounds) {
         voice.speak("Zeichne nach oben")
       }
       break
@@ -256,7 +260,7 @@ function speechMovement() {
       up = false
       right = false
       left = false
-      if (textToSpeech) {
+      if (sounds) {
         voice.speak("Zeichne nach unten")
       }
       break
@@ -265,7 +269,7 @@ function speechMovement() {
       up = false
       down = false
       left = false
-      if (textToSpeech) {
+      if (sounds) {
         voice.speak("Zeichne nach rechts")
       }
       break
@@ -274,7 +278,7 @@ function speechMovement() {
       up = false
       down = false
       right = false
-      if (textToSpeech) {
+      if (sounds) {
         voice.speak("Zeichne nach links")
       }
       break
@@ -283,7 +287,7 @@ function speechMovement() {
       down = false
       right = false
       left = false
-      if (textToSpeech) {
+      if (sounds) {
         voice.speak("Zeichnen gestoppt")
       }
       break
@@ -321,7 +325,7 @@ function mouseDragged() {
 function mouseReleased() {
   if (dragged) {
     select("#defaultCanvas0").removeClass("focused");
-    if (textToSpeech) {
+    if (sounds) {
       voice.speak("Linie gezeichnet")
     }
     dragged = false;
