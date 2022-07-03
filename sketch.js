@@ -2,8 +2,6 @@ let backgroundColor = 255;
 //Clientgröße 
 let cWidth = document.getElementById("main").clientWidth;
 let cHeight = document.getElementById("main").clientHeight;
-let positionX = cWidth / 2;
-let positionY = cHeight / 2;
 
 let touch = false, keyboard = false, speech = false, mouse = true;
 let stepsBack = [];
@@ -18,7 +16,7 @@ let voice;
 let saveStepOption = false
 let undoOption = false
 let load;
-
+let textToSpeech = false;
 
 function setup() {
   px = x = cWidth / 2;
@@ -84,9 +82,16 @@ function setup() {
 
   //Undo und Redo
   undo = select('#undo');
-  undo.mouseClicked(() => {undoStep()});
+  undo.mouseClicked(() => { undoStep() });
   redo = select('#redo');
-  redo.mouseClicked(() => { redoStep()});
+  redo.mouseClicked(() => { redoStep() });
+
+  //toggle voice
+  select('#voice').mouseClicked(() => {
+    textToSpeech = !textToSpeech;
+  });
+  //
+
 
   //checkBoxes for InputTypes
   mouseCheck = createCheckbox('Mouse', true).parent('mouse');
@@ -130,9 +135,11 @@ function setup() {
 
 function doubleClicked() {
   if (mouseX > 0 && mouseY > 0) {
-    positionX = mouseX;
-    positionY = mouseY;
-    voice.speak("Position gesetzt");
+    x = mouseX;
+    y = mouseY;
+    if (textToSpeech) {
+      voice.speak("Position gesetzt");
+    }
   }
 }
 
@@ -143,7 +150,6 @@ function draw() {
     limCursor();
     space();
     keyCheck();
-    //cursorMoved(x, y);
   }
   if (undoOption) {
     if (keyIsDown(17) && keyIsDown(90)) {
@@ -176,14 +182,14 @@ function draw() {
 
 function posChange(dim, value) {
   if (dim === "height") {
-    if (checkClientSize(dim, positionY + value)) {
-      drawLine(positionX, positionY, positionX, positionY + value);
+    if (checkClientSize(dim, y + value)) {
+      drawLine(x, y, x, y + value);
       positionY += value;
     }
   } else {
-    if (checkClientSize(dim, positionX + value)) {
-      drawLine(positionX, positionY, positionX + value, positionY);
-      positionX += value;
+    if (checkClientSize(dim, x + value)) {
+      drawLine(x, y, x + value, y);
+      x += value;
     }
   }
   select("#defaultCanvas0").addClass("focused")
@@ -197,35 +203,45 @@ function speechMovement() {
       down = false
       right = false
       left = false
-      voice.speak("Zeichne nach oben")
+      if (textToSpeech) {
+        voice.speak("Zeichne nach oben")
+      }
       break
     case "runter":
       down = true
       up = false
       right = false
       left = false
-      voice.speak("Zeichne nach unten")
+      if (textToSpeech) {
+        voice.speak("Zeichne nach unten")
+      }
       break
     case "rechts":
       right = true
       up = false
       down = false
       left = false
-      voice.speak("Zeichne nach rechts")
+      if (textToSpeech) {
+        voice.speak("Zeichne nach rechts")
+      }
       break
     case "links":
       left = true
       up = false
       down = false
       right = false
-      voice.speak("Zeichne nach links")
+      if (textToSpeech) {
+        voice.speak("Zeichne nach links")
+      }
       break
     case "stopp":
       up = false
       down = false
       right = false
       left = false
-      voice.speak("Zeichnen gestoppt")
+      if (textToSpeech) {
+        voice.speak("Zeichnen gestoppt")
+      }
       break
   }
 }
@@ -247,8 +263,8 @@ function mouseDragged() {
       select("#defaultCanvas0").addClass("focused")
     }
     checkSettings();
-    positionX = pmouseX;
-    positionY = pmouseY;
+    x = pmouseX;
+    y = pmouseY;
     drawLine(mouseX, mouseY, pmouseX, pmouseY);
     drawing.stroke(colorPicker.color());
     drawing.strokeWeight(slider.value());
@@ -259,7 +275,9 @@ function mouseDragged() {
 function mouseReleased() {
   if (dragged) {
     select("#defaultCanvas0").removeClass("focused");
-    voice.speak("Linie gezeichnet")
+    if (textToSpeech) {
+      voice.speak("Linie gezeichnet")
+    }
     dragged = false;
   }
 }

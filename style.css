@@ -40,10 +40,10 @@ canvas {
 }
 
 #main {
-  margin-top: 64px;
+  margin-top: 70px;
   margin-left: 150px;
   width: calc(100vw - 350px);
-  height: calc(100vh - 64px);
+  height: calc(100vh - 70px);
   display: flex;
   align-items: center;
   justify-content: center;
