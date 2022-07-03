@@ -46,8 +46,8 @@ inputModal.addEventListener('hidden.bs.modal', () => {
 
 function preload() {
   soundFormats('mp3');
-  undosound = loadSound("./resources/pop_sound_effect_1601797.mp3");
-  redosound = loadSound("./resources/cartoon_zoom_sound_effect_7884528664579334775.mp3")
+  redosound = loadSound("./resources/pop_sound_effect_1601797.mp3");
+  undosound = loadSound("./resources/cartoon_zoom_sound_effect_7884528664579334775.mp3")
 }
 
 function setup() {
@@ -395,7 +395,7 @@ function drawLine(position1X, position1Y, position2X, position2Y) {
 
 function saveDrawing() {
   saveStep(stepsBack)
-  stepsForward = []
+  //stepsForward = []
 }
 
 function undoStep() {
