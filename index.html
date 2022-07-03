@@ -60,7 +60,7 @@
         <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton1">
           <button class="dropdown-item" id="urtype">Toggle undo/redo mode</button>
           <button class="dropdown-item" id="voice">Toggle voice</button>
-          <button class="dropdown-item">Change input types</button>
+          <button class="dropdown-item" data-bs-toggle="modal" data-bs-target="#inputmodal">Change input types</button>
           <button class="dropdown-item" data-bs-toggle="modal" data-bs-target="#whmodal">Customize
             width&height</button>
         </ul>
@@ -98,16 +98,49 @@
     </div>
   </div>
 
-  <nav id="toolbar">
-    <div id="inputType">
-      <fieldset>
-        <legend>Choose your input:</legend>
-        <div id="mouse"></div>
-        <div id="keyboard"></div>
-        <div id="touch"></div>
-        <div id="speech"></div>
-      </fieldset>
+  <!-- Modal for input types -->
+  <div class="modal fade" id="inputmodal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header text-black">
+          <h5 class="modal-title" id="exampleModalLabel">Customize your width and height</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" id="mouse"  checked>
+            <label class="form-check-label text-black" for="flexCheckDefault">
+              Mouse
+            </label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" id="keyboard">
+            <label class="form-check-label text-black" for="flexCheckChecked">
+              Keyboard
+            </label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" id="touch">
+            <label class="form-check-label text-black" for="flexCheckDefault">
+              Touch
+            </label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" id="speech">
+            <label class="form-check-label text-black" for="flexCheckChecked">
+              Speech
+            </label>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary" id="saveInputs" data-bs-dismiss="modal">Save changes</button>
+        </div>
+      </div>
     </div>
+  </div>
+
+  <nav id="toolbar">
     <div id="sliderDiv"></div>
     <div id="radioDiv"></div>
   </nav>

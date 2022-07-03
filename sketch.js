@@ -19,6 +19,7 @@ let load;
 let textToSpeech = false;
 
 let drawing_enabled = true;
+
 const whModal = document.getElementById('whmodal')
 
 whModal.addEventListener('shown.bs.modal', () => {
@@ -26,6 +27,20 @@ whModal.addEventListener('shown.bs.modal', () => {
 })
 
 whModal.addEventListener('hidden.bs.modal', () => {
+  drawing_enabled = true;
+})
+
+const inputModal = document.getElementById('inputmodal')
+
+inputModal.addEventListener('shown.bs.modal', () => {
+  drawing_enabled = false;
+  keyboardCheck.elt.checked = keyboard;
+  mouseCheck.elt.checked = mouse;
+  speechCheck.elt.checked = speech;
+  touchCheck.elt.checked = touch;
+})
+
+inputModal.addEventListener('hidden.bs.modal', () => {
   drawing_enabled = true;
 })
 
@@ -114,32 +129,38 @@ function setup() {
   });
 
   //checkBoxes for InputTypes
-  mouseCheck = createCheckbox('Mouse', true).parent('mouse');
-  mouseCheck.mousePressed(() => {
-    mouse = !mouse
-  });
-  keyboardCheck = createCheckbox('Keyboard', false).parent('keyboard');
-  keyboardCheck.mousePressed(() => {
-    keyboard = !keyboard
-    if (keyboard) {
+  mouseCheck = select("#mouse");
+  keyboardCheck = select("#keyboard")
+  touchCheck = select("#touch")
+  speechCheck = select("#speech")
+
+  select("#saveInputs").mouseClicked(() => {
+    if(mouseCheck.checked()) {
+      mouse = true;
+    } else {
+      mouse = false;
+    }
+    if(keyboardCheck.checked()) {
+      keyboard = true
       cursor(CROSS)
     } else {
+      keyboard = false;
       cursor()
     }
-  });
-  touchCheck = createCheckbox('Touch', false).parent('touch');
-  touchCheck.mousePressed(() => {
-    touch = !touch
-  });
-  speechCheck = createCheckbox('Speech', false).parent('speech');
-  speechCheck.mousePressed(() => {
-    speech = !speech;
-    if (speech) {
+    if(touchCheck.checked()) {
+      touch = true
+    } else {
+      touch = false
+    }
+    if(speechCheck.checked()) {
+      speech = true;
       speechRec.start();
     } else {
+      speech = false;
       speechRec.stop();
     }
-  });
+  })
+
   //p5.Speech
   let lang = 'de-DE';
   speechRec = new p5.SpeechRec(lang);
@@ -166,7 +187,7 @@ function doubleClicked() {
 function draw() {
   image(drawing, 0, 0)
   checkSettings();
-  if (keyboardCheck.checked()) {
+  if (keyboard) {
     limCursor();
     space();
     keyCheck();
@@ -200,7 +221,7 @@ function posChange(dim, value) {
   if (dim === "height") {
     if (checkClientSize(dim, y + value)) {
       drawLine(x, y, x, y + value);
-      positionY += value;
+      y += value;
     }
   } else {
     if (checkClientSize(dim, x + value)) {
@@ -371,20 +392,16 @@ function saveDrawing() {
 }
 
 function undoStep() {
-  console.log(stepsForward.length)
   if (stepsBack.length >= 1) {
     saveStep(stepsForward)
     drawing.image(stepsBack.pop(), 0, 0)
   }
-  console.log(stepsForward.length)
 }
 function redoStep() {
-  console.log(stepsForward.length)
   if (stepsForward.length >= 1) {
     saveStep(stepsBack)
     drawing.image(stepsForward.pop(), 0, 0)
   }
-  console.log(stepsForward.length)
 }
 
 function saveStep(array) {
