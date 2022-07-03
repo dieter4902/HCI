@@ -30,9 +30,9 @@ canvas {
   display: flex;
   flex-flow: column;
   position: fixed;
-  height: calc(100vh - 56px);
+  height: calc(100vh - 70px);
   width: 150px;
-  top: 56px;
+  top: 70px;
   justify-content: space-evenly;
   align-items: center;
   background-color: #212529;
@@ -101,9 +101,9 @@ fieldset>div {
   display: flex;
   flex-flow: column;
   position: fixed;
-  height: calc(100vh - 56px);
+  height: calc(100vh - 70px);
   width: 200px;
-  top: 56px;
+  top: 70px;
   left: calc(100vw - 200px);
   align-items: center;
   background-color: #212529;
