@@ -145,13 +145,11 @@ function draw() {
   if (undoOption) {
     if (keyIsDown(17) && keyIsDown(90)) {
       if (stepsBack.length >= 1) {
-        saveStep(stepsForward)
-        drawing.image(stepsBack.pop(), 0, 0)
+        undoStep()
       }
     } else if (keyIsDown(17) && keyIsDown(89)) {
       if (stepsForward.length >= 1) {
-        saveStep(stepsBack)
-        drawing.image(stepsForward.pop(), 0, 0)
+        redoStep()
       }
     }
   }
@@ -331,6 +329,14 @@ function saveDrawing() {
   stepsForward = []
 }
 
+function undoStep(){
+  saveStep(stepsForward)
+  drawing.image(stepsBack.pop(), 0, 0)
+}
+function redoStep(){
+  saveStep(stepsBack)
+  drawing.image(stepsForward.pop(), 0, 0)
+}
 
 function saveStep(array) {
   current = createGraphics(cWidth, cHeight);
@@ -350,13 +356,11 @@ function keyPressed() {
   if (!undoOption) {
     if ((key == "Control" && keyIsDown(90)) || (key == "z" && keyIsDown(17))) {
       if (stepsBack.length >= 1) {
-        saveStep(stepsForward)
-        drawing.image(stepsBack.pop(), 0, 0)
+        undoStep()
       }
     } else if ((key == "Control" && keyIsDown(89)) || (key == "y" && keyIsDown(17))) {
       if (stepsForward.length >= 1) {
-        saveStep(stepsBack)
-        drawing.image(stepsForward.pop(), 0, 0)
+        redoStep()
       }
     }
   }
