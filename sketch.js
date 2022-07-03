@@ -4,8 +4,8 @@ let cWidth = document.getElementById("main").clientWidth;
 let cHeight = document.getElementById("main").clientHeight;
 
 let touch = false, keyboard = false, speech = false, mouse = true;
-let stepsBack = [];
-let stepsForward = [];
+var stepsBack = [];
+var stepsForward = [];
 //input-vars
 let speechRec, stopSpeech, up, left, down, right;
 let prevTouch = []
@@ -83,12 +83,13 @@ function setup() {
   //Undo und Redo
   undo = select('#undo');
   undo.mouseClicked(() => {
-    undoStep()
+    stepsBack.pop()
     undoStep()
   });
   redo = select('#redo');
   redo.mouseClicked(() => {
-    redoStep()
+    stepsBack.pop()
+    //stepsForward.pop()
     redoStep()
   });
 
@@ -162,9 +163,9 @@ function draw() {
   }
   if (undoOption) {
     if (keyIsDown(17) && keyIsDown(90)) {
-      undoStep()
+        undoStep()
     } else if (keyIsDown(17) && keyIsDown(89)) {
-      redoStep()
+        redoStep()
     }
   }
 
@@ -352,16 +353,24 @@ function drawLine(position1X, position1Y, position2X, position2Y) {
 
 function saveDrawing() {
   saveStep(stepsBack)
-  stepsForward = []
+  //stepsForward = []
 }
 
 function undoStep() {
-  saveStep(stepsForward)
-  drawing.image(stepsBack.pop(), 0, 0)
+  console.log(stepsForward.length)
+  if (stepsBack.length >= 1) {
+    saveStep(stepsForward)
+    drawing.image(stepsBack.pop(), 0, 0)
+  }
+  console.log(stepsForward.length)
 }
 function redoStep() {
-  saveStep(stepsBack)
-  drawing.image(stepsForward.pop(), 0, 0)
+  console.log(stepsForward.length)
+  if (stepsForward.length >= 1) {
+    saveStep(stepsBack)
+    drawing.image(stepsForward.pop(), 0, 0)
+  }
+  console.log(stepsForward.length)
 }
 
 function saveStep(array) {
@@ -381,13 +390,9 @@ function mousePressed() {
 function keyPressed() {
   if (!undoOption) {
     if ((key == "Control" && keyIsDown(90)) || (key == "z" && keyIsDown(17))) {
-      if (stepsBack.length >= 1) {
-        undoStep()
-      }
+      undoStep()
     } else if ((key == "Control" && keyIsDown(89)) || (key == "y" && keyIsDown(17))) {
-      if (stepsForward.length >= 1) {
-        redoStep()
-      }
+      redoStep()
     }
   }
 }
