@@ -44,6 +44,12 @@ inputModal.addEventListener('hidden.bs.modal', () => {
   drawing_enabled = true;
 })
 
+function preload() {
+  soundFormats('mp3');
+  undosound = loadSound("./resources/pop_sound_effect_1601797.mp3");
+  redosound = loadSound("./resources/cartoon_zoom_sound_effect_7884528664579334775.mp3")
+}
+
 function setup() {
   px = x = cWidth / 2;
   py = y = cHeight / 2;
@@ -109,14 +115,15 @@ function setup() {
   //Undo und Redo
   undo = select('#undo');
   undo.mouseClicked(() => {
+    undosound.play()
     stepsBack.pop()
     undoStep()
   });
   redo = select('#redo');
   redo.mouseClicked(() => {
     stepsBack.pop()
-    //stepsForward.pop()
     redoStep()
+    redosound.play()
   });
 
   //toggle voice
