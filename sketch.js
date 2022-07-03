@@ -18,6 +18,17 @@ let undoOption = false
 let load;
 let textToSpeech = false;
 
+let drawing_enabled = true;
+const whModal = document.getElementById('whmodal')
+
+whModal.addEventListener('shown.bs.modal', () => {
+  drawing_enabled = false;
+})
+
+whModal.addEventListener('hidden.bs.modal', () => {
+  drawing_enabled = true;
+})
+
 function setup() {
   px = x = cWidth / 2;
   py = y = cHeight / 2;
@@ -99,7 +110,6 @@ function setup() {
   });
   //toggle to different undo redo mode
   select('#urtype').mouseClicked(() => {
-    saveStepOption = !saveStepOption;
     undoOption = !undoOption;
   });
 
@@ -163,9 +173,9 @@ function draw() {
   }
   if (undoOption) {
     if (keyIsDown(17) && keyIsDown(90)) {
-        undoStep()
+      undoStep()
     } else if (keyIsDown(17) && keyIsDown(89)) {
-        redoStep()
+      redoStep()
     }
   }
 
@@ -264,17 +274,19 @@ function resizeEvent() {
 let dragged = false;
 
 function mouseDragged() {
-  if (mouse && mouseX > 0 && mouseY > 0) {
-    if (dragged === false) {
-      select("#defaultCanvas0").addClass("focused")
+  if (drawing_enabled) {
+    if (mouse && mouseX > 0 && mouseY > 0) {
+      if (dragged === false) {
+        select("#defaultCanvas0").addClass("focused")
+      }
+      checkSettings();
+      x = pmouseX;
+      y = pmouseY;
+      drawLine(mouseX, mouseY, pmouseX, pmouseY);
+      drawing.stroke(colorPicker.color());
+      drawing.strokeWeight(slider.value());
+      dragged = true;
     }
-    checkSettings();
-    x = pmouseX;
-    y = pmouseY;
-    drawLine(mouseX, mouseY, pmouseX, pmouseY);
-    drawing.stroke(colorPicker.color());
-    drawing.strokeWeight(slider.value());
-    dragged = true;
   }
 }
 
@@ -289,18 +301,20 @@ function mouseReleased() {
 }
 
 function touchMoved() {
-  if (touch) {
-    checkSettings();
-    for (let i = 0; i < touches.length; i++) {
-      if (prevTouch[i]) {
-        drawLine(prevTouch[i].x, prevTouch[i].y, touches[i].x, touches[i].y);
+  if (drawing_enabled) {
+    if (touch) {
+      checkSettings();
+      for (let i = 0; i < touches.length; i++) {
+        if (prevTouch[i]) {
+          drawLine(prevTouch[i].x, prevTouch[i].y, touches[i].x, touches[i].y);
+        }
+        prevTouch[i] = { x: touches[i].x, y: touches[i].y }
       }
-      prevTouch[i] = { x: touches[i].x, y: touches[i].y }
+      drawing.stroke(colorPicker.color());
+      drawing.strokeWeight(slider.value());
     }
-    drawing.stroke(colorPicker.color());
-    drawing.strokeWeight(slider.value());
+    return false;
   }
-  return false;
 }
 
 function touchStarted() {
@@ -353,7 +367,7 @@ function drawLine(position1X, position1Y, position2X, position2Y) {
 
 function saveDrawing() {
   saveStep(stepsBack)
-  //stepsForward = []
+  stepsForward = []
 }
 
 function undoStep() {
