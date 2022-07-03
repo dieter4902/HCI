@@ -25,7 +25,7 @@ function setup() {
   py = y = cHeight / 2;
   speed = 4;
   pixelDensity(1);
-/*   imageMode(CENTER) */
+  /*   imageMode(CENTER) */
   createCanvas(cWidth, cHeight).parent('main');
 
   drawing = createGraphics(cWidth, cHeight);
@@ -69,15 +69,11 @@ function setup() {
       if (file.type === 'image') {
         let urlOfImageFile = URL.createObjectURL(file.file);
         let imageObject = loadImage(urlOfImageFile, () => {
-          if (imageObject > cWidth && imageObject > cHeight) {
-            image(imageObject, cWidth / 2, cHeight / 2, cWidth, cHeight)
-          } else if (imageObject > cWidth) {
-            image(imageObject, cWidth / 2, cHeight / 2, cWidth, cHeight)
-          } else if (imageObject > cHeight) {
-            image(imageObject, cWidth / 2, cHeight / 2, cWidth, cHeight)
-          } else {
-            image(imageObject, cWidth / 2, cHeight / 2)
-          }
+          cHeight = imageObject.height
+          cWidth = imageObject.width
+          resizeCanvas(cWidth, cHeight);
+          saveDrawing()
+          drawing.image(imageObject, 0, 0, cWidth, cHeight)
         });
         /*         backgroundColor = imageObject; */
       } else {
@@ -325,10 +321,14 @@ function reset() {
 
 function drawLine(position1X, position1Y, position2X, position2Y) {
   if (saveStepOption) {
-    saveStep(stepsBack)
-    stepsForward = []
+    saveDrawing()
   }
   drawing.line(position1X, position1Y, position2X, position2Y);
+}
+
+function saveDrawing(){
+  saveStep(stepsBack)
+    stepsForward = []
 }
 
 function saveStep(array) {
@@ -341,8 +341,7 @@ function saveStep(array) {
 
 function mousePressed() {
   if (!saveStepOption) {
-    saveStep(stepsBack)
-    stepsForward = []
+    saveDrawing()
   }
 }
 
