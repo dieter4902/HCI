@@ -25,7 +25,7 @@ function setup() {
   py = y = cHeight / 2;
   speed = 4;
   pixelDensity(1);
-  imageMode(CENTER)
+/*   imageMode(CENTER) */
   createCanvas(cWidth, cHeight).parent('main');
 
   drawing = createGraphics(cWidth, cHeight);
@@ -77,8 +77,6 @@ function setup() {
             image(imageObject, cWidth / 2, cHeight / 2, cWidth, cHeight)
           } else {
             image(imageObject, cWidth / 2, cHeight / 2)
-            cWidth = imageObject.width;
-            cHeight = imageObject.height;
           }
         });
         /*         backgroundColor = imageObject; */
@@ -140,7 +138,7 @@ function doubleClicked() {
 
 function draw() {
   /*   background(backgroundColor) */
-  image(drawing, cWidth / 2, cHeight / 2)
+  image(drawing, 0, 0)
   checkSettings();
   if (keyboardCheck.checked()) {
     limCursor();
