@@ -25,7 +25,6 @@ function setup() {
   py = y = cHeight / 2;
   speed = 4;
   pixelDensity(1);
-  /*   imageMode(CENTER) */
   createCanvas(cWidth, cHeight).parent('main');
 
   drawing = createGraphics(cWidth, cHeight);
@@ -75,7 +74,6 @@ function setup() {
           saveDrawing()
           drawing.image(imageObject, 0, 0, cWidth, cHeight)
         });
-        /*         backgroundColor = imageObject; */
       } else {
         img = null;
       }
@@ -83,6 +81,12 @@ function setup() {
     input.hide();
     input.elt.click();
   })
+
+  //Undo und Redo
+  undo = select('#undo');
+  undo.mouseClicked(() => {undoStep()});
+  redo = select('#redo');
+  redo.mouseClicked(() => { redoStep()});
 
   //checkBoxes for InputTypes
   mouseCheck = createCheckbox('Mouse', true).parent('mouse');
@@ -133,7 +137,6 @@ function doubleClicked() {
 }
 
 function draw() {
-  /*   background(backgroundColor) */
   image(drawing, 0, 0)
   checkSettings();
   if (keyboardCheck.checked()) {
@@ -329,11 +332,11 @@ function saveDrawing() {
   stepsForward = []
 }
 
-function undoStep(){
+function undoStep() {
   saveStep(stepsForward)
   drawing.image(stepsBack.pop(), 0, 0)
 }
-function redoStep(){
+function redoStep() {
   saveStep(stepsBack)
   drawing.image(stepsForward.pop(), 0, 0)
 }
