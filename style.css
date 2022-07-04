@@ -33,10 +33,11 @@ canvas {
   height: calc(100vh - 70px);
   width: 150px;
   top: 70px;
-  justify-content: space-evenly;
+  row-gap: 1rem;
   align-items: center;
   background-color: #212529;
   overflow: hidden;
+  padding-top: 2rem;
 }
 
 #main {

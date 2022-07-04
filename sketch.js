@@ -64,11 +64,13 @@ function setup() {
   slider = createSlider(1, 30, 5).parent('sliderDiv');
   slider.id("slider");
   //Button zum löschen des gemalten
-  eraser = createButton("Clear").parent('toolbar').id('eraser').addClass("btn btn-danger");
-  eraser.mousePressed(reset);
+  erase = createButton("Clear").parent('toolbar').id('eraser').addClass("btn btn-danger");
+  erase.mousePressed(reset);
   //Radierer
-  checkboxErase = createCheckbox('Erase', false).parent('toolbar');
+  checkboxErase = createCheckbox('Erase', false).parent('toolbar').addClass("form-check-input");
   //Radiobuttons und Beschreibung für Pinselform
+  pen = select('#pen')
+  eraser = select('#pen')
   createSpan("Change pen:").parent('radioDiv');
   radio = createRadio().parent('radioDiv');
   radio.option('square');
