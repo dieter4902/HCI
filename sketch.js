@@ -19,6 +19,8 @@ let sounds = false;
 
 let drawing_enabled = true;
 
+let pen = true, eraser, circle = true, square;
+
 const whModal = document.getElementById('whmodal')
 
 whModal.addEventListener('shown.bs.modal', () => {
@@ -66,15 +68,41 @@ function setup() {
   erase = createButton("Clear").parent('toolbar').id('eraser').addClass("btn btn-danger");
   erase.mousePressed(reset);
   //Radierer
-  checkboxErase = createCheckbox('Erase', false).parent('toolbar').addClass("form-check-input");
   //Radiobuttons und Beschreibung für Pinselform
-  pen = select('#pen')
-  eraser = select('#pen')
-  createSpan("Change pen:").parent('radioDiv');
-  radio = createRadio().parent('radioDiv');
-  radio.option('square');
-  radio.option('round');
-  radio.selected('round');
+  penButton = select('#pen').mouseClicked(() => {
+    pen = true;
+    eraser = false;
+    eraserButton.removeClass("btn-primary")
+    eraserButton.addClass("btn-secondary")
+    penButton.removeClass("btn-secondary")
+    penButton.addClass("btn-primary")
+  })
+  eraserButton = select('#eraser').mouseClicked(() => {
+    eraser = true;
+    pen = false;
+    penButton.removeClass("btn-primary")
+    penButton.addClass("btn-secondary")
+    eraserButton.removeClass("btn-secondary")
+    eraserButton.addClass("btn-primary")
+  })
+
+  circleButton = select('#circle').mouseClicked(() => {
+    circle = true;
+    square = false;
+    squareButton.removeClass("btn-primary")
+    squareButton.addClass("btn-secondary")
+    circleButton.removeClass("btn-secondary")
+    circleButton.addClass("btn-primary")
+  })
+  squareButton = select('#square').mouseClicked(() => {
+    square = true;
+    circle = false;
+    circleButton.removeClass("btn-primary")
+    circleButton.addClass("btn-secondary")
+    squareButton.removeClass("btn-secondary")
+    squareButton.addClass("btn-primary")
+  })
+
   //Einstellung für Breite
   inpWidth = select('#width');
   inpWidth.value(cWidth)
@@ -367,12 +395,12 @@ function checkClientSize(dim, value) {
 }
 
 function checkSettings() {
-  if (checkboxErase.checked()) {
+  if (eraser) {
     stroke(backgroundColor);
   }
-  if (radio.value() === 'round') {
+  if (circle) {
     strokeCap(ROUND);
-  } else if (radio.value() === 'square') {
+  } else if (square) {
     strokeCap(SQUARE);
   }
 }
