@@ -36,44 +36,43 @@
       </button>
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav me-auto mb-2 mb-lg-0 gap-1">
-          <button class="nav-item btn btn-primary " id="open">
+          <li class="nav-item btn btn-primary " id="open">
             Open
-          </button>
-          <button class="nav-item btn btn-primary " id="save">
+          </li>
+          <li class="nav-item btn btn-primary " id="save">
             Save
-          </button>
-          <button class="nav-item btn btn-secondary " id="undo">
+          </li>
+          <li class="nav-item btn btn-secondary " id="undo">
             <i class="bi bi-arrow-left"></i>
             Undo
-          </button>
-          <button class="nav-item btn btn-secondary" id="redo">
+          </li>
+          <li class="nav-item btn btn-secondary" id="redo">
             Redo
             <i class="bi bi-arrow-right"></i>
-          </button>
+          </li>
         </ul>
       </div>
       <div class="dropdown ms-auto">
-        <p class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown"
+        <p class="btn btn-secondary dropdown-toggle" role="button" id="dropdownMenuButton1" data-bs-toggle="dropdown"
           aria-expanded="false">
           Settings
         </p>
         <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton1">
-          <button class="dropdown-item" id="urtype">Toggle undo/redo mode</button>
-          <button class="dropdown-item" id="voice">Toggle voice</button>
-          <button class="dropdown-item" data-bs-toggle="modal" data-bs-target="#inputmodal">Change input types</button>
-          <button class="dropdown-item" data-bs-toggle="modal" data-bs-target="#whmodal">Customize
-            width&height</button>
+          <li class="dropdown-item" id="urtype">Toggle undo/redo mode</li>
+          <li class="dropdown-item" id="voice">Toggle voice</li>
+          <li class="dropdown-item" data-bs-toggle="modal" data-bs-target="#inputmodal">Change input types</li>
+          <li class="dropdown-item" data-bs-toggle="modal" data-bs-target="#whmodal">Customize width&height</li>
         </ul>
       </div>
     </div>
   </nav>
 
   <!-- Modal for Custom width and height -->
-  <div class="modal fade" id="whmodal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal fade" id="whmodal" tabindex="-1" aria-labelledby="widhtheightModalLabel" aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header text-black">
-          <h5 class="modal-title" id="exampleModalLabel">Customize your width and height</h5>
+          <h5 class="modal-title" id="widhtheightModalLabel">Customize your width and height</h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
@@ -99,35 +98,35 @@
   </div>
 
   <!-- Modal for input types -->
-  <div class="modal fade" id="inputmodal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal fade" id="inputmodal" tabindex="-1" aria-labelledby="inputModalLabel" aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header text-black">
-          <h5 class="modal-title" id="exampleModalLabel">Customize your width and height</h5>
+          <h5 class="modal-title" id="inputModalLabel">Customize your width and height</h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
           <div class="form-check">
             <input class="form-check-input" type="checkbox" id="mouse"  checked>
-            <label class="form-check-label text-black" for="flexCheckDefault">
+            <label class="form-check-label text-black" for="mouse">
               Mouse
             </label>
           </div>
           <div class="form-check">
             <input class="form-check-input" type="checkbox" id="keyboard">
-            <label class="form-check-label text-black" for="flexCheckChecked">
+            <label class="form-check-label text-black" for="keyboard">
               Keyboard
             </label>
           </div>
           <div class="form-check">
             <input class="form-check-input" type="checkbox" id="touch">
-            <label class="form-check-label text-black" for="flexCheckDefault">
+            <label class="form-check-label text-black" for="touch">
               Touch
             </label>
           </div>
           <div class="form-check">
             <input class="form-check-input" type="checkbox" id="speech">
-            <label class="form-check-label text-black" for="flexCheckChecked">
+            <label class="form-check-label text-black" for="speech">
               Speech
             </label>
           </div>
