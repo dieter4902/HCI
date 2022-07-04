@@ -13,7 +13,6 @@ let prevTouch = []
 //output-vars
 let voice;
 
-let saveStepOption = false
 let undoOption = false
 let load;
 let sounds = false;
@@ -115,17 +114,17 @@ function setup() {
   //Undo und Redo
   undo = select('#undo');
   undo.mouseClicked(() => {
-    if(sounds) {
+    if (sounds) {
       undosound.play()
     }
-    stepsBack.pop()
+    //tepsBack.pop()
     undoStep()
   });
   redo = select('#redo');
   redo.mouseClicked(() => {
-    stepsBack.pop()
+    //stepsBack.pop()
     redoStep()
-    if(sounds) {
+    if (sounds) {
       redosound.play()
     }
   });
@@ -146,24 +145,16 @@ function setup() {
   speechCheck = select("#speech")
 
   select("#saveInputs").mouseClicked(() => {
-    if(mouseCheck.checked()) {
-      mouse = true;
-    } else {
-      mouse = false;
-    }
-    if(keyboardCheck.checked()) {
+    mouse = !!mouseCheck.checked();
+    if (keyboardCheck.checked()) {
       keyboard = true
       cursor(CROSS)
     } else {
       keyboard = false;
       cursor()
     }
-    if(touchCheck.checked()) {
-      touch = true
-    } else {
-      touch = false
-    }
-    if(speechCheck.checked()) {
+    touch = !!touchCheck.checked();
+    if (speechCheck.checked()) {
       speech = true;
       speechRec.start();
     } else {
@@ -385,21 +376,20 @@ function checkSettings() {
 }
 
 function reset() {
+  saveDrawing()
   resizeCanvas(cWidth, cHeight);
-  background(backgroundColor);
+  drawing.background(backgroundColor);
 }
 
 
 function drawLine(position1X, position1Y, position2X, position2Y) {
-  if (saveStepOption) {
-    saveDrawing()
-  }
+  //saveDrawing()
   drawing.line(position1X, position1Y, position2X, position2Y);
 }
 
 function saveDrawing() {
   saveStep(stepsBack)
-  //stepsForward = []
+  stepsForward = []
 }
 
 function undoStep() {
@@ -424,16 +414,17 @@ function saveStep(array) {
 
 
 function mousePressed() {
-  if (!saveStepOption) {
+  if (mouseX > 0 && mouseY > 0) {
     saveDrawing()
   }
+
 }
 
 function keyPressed() {
   if (!undoOption) {
-    if ((key == "Control" && keyIsDown(90)) || (key == "z" && keyIsDown(17))) {
+    if ((key === "Control" && keyIsDown(90)) || (key === "z" && keyIsDown(17))) {
       undoStep()
-    } else if ((key == "Control" && keyIsDown(89)) || (key == "y" && keyIsDown(17))) {
+    } else if ((key === "Control" && keyIsDown(89)) || (key === "y" && keyIsDown(17))) {
       redoStep()
     }
   }
