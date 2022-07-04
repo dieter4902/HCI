@@ -65,7 +65,9 @@ function setup() {
   slider = createSlider(1, 30, 5).parent('sliderDiv');
   slider.id("slider");
   //Button zum löschen des gemalten
-  erase = createButton("Clear").parent('toolbar').id('eraser').addClass("btn btn-danger");
+  colorPicker = createColorPicker('#ed225d').parent('toolbar');
+
+  erase = createButton("Clear").parent('toolbar').id('eraser').addClass("btn btn-danger mt-auto mb-2");
   erase.mousePressed(reset);
   //Radierer
   //Radiobuttons und Beschreibung für Pinselform
@@ -113,7 +115,6 @@ function setup() {
   inpChangesWH = select('#saveCustomWH')
   inpChangesWH.mouseClicked(resizeEvent);
   //Pinselfarbe
-  colorPicker = createColorPicker('#ed225d').parent('toolbar');
   //Standardbackground
   background(backgroundColor);
   colorMode(RGB);
