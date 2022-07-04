@@ -67,8 +67,8 @@ function setup() {
   //Button zum löschen des gemalten
   colorPicker = createColorPicker('#ed225d').parent('toolbar');
 
-  erase = createButton("Clear").parent('toolbar').id('eraser').addClass("btn btn-danger mt-auto mb-2");
-  erase.mousePressed(reset);
+  clearAll = createButton("Clear").parent('toolbar').id('eraser').addClass("btn btn-danger mt-auto mb-2");
+  clearAll.mousePressed(reset);
   //Radierer
   //Radiobuttons und Beschreibung für Pinselform
   penButton = select('#pen').mouseClicked(() => {
@@ -144,20 +144,18 @@ function setup() {
 
   //Undo und Redo
   undo = select('#undo');
+  undo.touchStarted(() => {
+    undoStep();
+  })
   undo.mouseClicked(() => {
-    if (sounds) {
-      undosound.play()
-    }
-    //tepsBack.pop()
-    undoStep()
+    undoStep();
   });
   redo = select('#redo');
+  redo.touchStarted(() => {
+    redoStep();
+  })
   redo.mouseClicked(() => {
-    //stepsBack.pop()
     redoStep()
-    if (sounds) {
-      redosound.play()
-    }
   });
 
   //toggle voice
@@ -424,12 +422,18 @@ function saveDrawing() {
 }
 
 function undoStep() {
+  if (sounds) {
+    undosound.play()
+  }
   if (stepsBack.length >= 1) {
     saveStep(stepsForward)
     drawing.image(stepsBack.pop(), 0, 0)
   }
 }
 function redoStep() {
+  if (sounds) {
+    redosound.play()
+  }
   if (stepsForward.length >= 1) {
     saveStep(stepsBack)
     drawing.image(stepsForward.pop(), 0, 0)
