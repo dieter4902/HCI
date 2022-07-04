@@ -397,12 +397,12 @@ function checkClientSize(dim, value) {
 
 function checkSettings() {
   if (eraser) {
-    stroke(backgroundColor);
+    drawing.stroke(backgroundColor);
   }
   if (circle) {
-    strokeCap(ROUND);
+    drawing.strokeCap(ROUND);
   } else if (square) {
-    strokeCap(SQUARE);
+    drawing.strokeCap(SQUARE);
   }
 }
 
