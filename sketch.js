@@ -174,7 +174,7 @@ function setup() {
   speechCheck = select("#speech")
 
   select("#saveInputs").mouseClicked(() => {
-    mouse = !!mouseCheck.checked();
+    mouse = mouseCheck.checked();
     if (keyboardCheck.checked()) {
       keyboard = true
       cursor(CROSS)
@@ -182,7 +182,7 @@ function setup() {
       keyboard = false;
       cursor()
     }
-    touch = !!touchCheck.checked();
+    touch = touchCheck.checked();
     if (speechCheck.checked()) {
       speech = true;
       speechRec.start();
